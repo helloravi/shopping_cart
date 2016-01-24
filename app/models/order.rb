@@ -4,8 +4,15 @@ class Order < ActiveRecord::Base
   before_create :set_order_status
   before_save :update_subtotal
 
+  PRICE_ZERO = 0
 
   def subtotal
-    order_items.collect { |oi| oi.valid? ? (oi.quantity*oi.unit_price) : 0 }.sum
+    order_items.collect { |order_item| order_item.valid? ? (order_item.price) : PRICE_ZERO }.sum
+  end
+
+  def update_subtotal
+  end
+
+  def set_order_status
   end
 end
